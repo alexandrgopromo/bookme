@@ -5,15 +5,37 @@ import AdminDashboard from './pages/admin/Dashboard';
 import CreateSchedule from './pages/admin/CreateSchedule';
 import ScheduleDetails from './pages/admin/ScheduleDetails';
 import BookingPage from './pages/book/BookingPage';
+import RequireAuth from './components/admin/RequireAuth';
 
 export default function App() {
   return (
     <Router>
       <Routes>
         <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path="/admin" element={<AdminDashboard />} />
-        <Route path="/admin/create" element={<CreateSchedule />} />
-        <Route path="/admin/schedule/:slug" element={<ScheduleDetails />} />
+        <Route
+          path="/admin"
+          element={
+            <RequireAuth>
+              <AdminDashboard />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/admin/create"
+          element={
+            <RequireAuth>
+              <CreateSchedule />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/admin/schedule/:slug"
+          element={
+            <RequireAuth>
+              <ScheduleDetails />
+            </RequireAuth>
+          }
+        />
         <Route path="/book/:slug" element={<BookingPage />} />
         <Route path="/" element={<Navigate to="/admin" replace />} />
       </Routes>

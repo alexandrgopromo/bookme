@@ -14,6 +14,11 @@ const requireAuth = (req: express.Request, res: express.Response, next: express.
   next();
 };
 
+// Check auth status
+router.get('/check-auth', requireAuth, (req, res) => {
+  res.json({ authenticated: true });
+});
+
 // Login
 router.post('/login', (req, res) => {
   const { password } = req.body;
