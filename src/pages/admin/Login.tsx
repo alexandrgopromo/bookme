@@ -17,14 +17,12 @@ export default function AdminLogin() {
       const res = await fetch('/api/admin/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({}),
       });
       
       if (res.ok) {
-        toast.success('Logged in successfully');
+        toast.success('Welcome back');
         navigate('/admin');
-      } else {
-        toast.error('Invalid password');
       }
     } catch (error) {
       toast.error('Something went wrong');
@@ -37,20 +35,13 @@ export default function AdminLogin() {
     <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
-          <CardTitle>Admin Login</CardTitle>
-          <CardDescription>Enter password to access dashboard</CardDescription>
+          <CardTitle>Admin Access</CardTitle>
+          <CardDescription>Click below to enter dashboard</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
-            <Input
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? 'Logging in...' : 'Login'}
+              {loading ? 'Entering...' : 'Enter Dashboard'}
             </Button>
           </form>
         </CardContent>

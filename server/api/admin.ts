@@ -7,10 +7,7 @@ const router = express.Router();
 
 // Middleware to check auth
 const requireAuth = (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const token = req.cookies.admin_token;
-  if (!token || !verifyToken(token)) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
+  // Auth disabled per user request
   next();
 };
 
@@ -21,17 +18,14 @@ router.get('/check-auth', requireAuth, (req, res) => {
 
 // Login
 router.post('/login', (req, res) => {
-  const { password } = req.body;
-  if (verifyPassword(password)) {
-    const token = signToken({ role: 'admin' });
-    res.cookie('admin_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 24 * 60 * 60 * 1000 // 1 day
-    });
-    return res.json({ success: true });
-  }
-  res.status(401).json({ error: 'Invalid password' });
+  // Auto-login, no password check
+  const token = signToken({ role: 'admin' });
+  res.cookie('admin_token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 24 * 60 * 60 * 1000 // 1 day
+  });
+  return res.json({ success: true });
 });
 
 // Get all schedules
